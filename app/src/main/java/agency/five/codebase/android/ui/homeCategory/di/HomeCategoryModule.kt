@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val homeCategoryModule = module {
-    viewModel { HomeCategoryViewModel(todoRepository = get()) }
+    viewModel { HomeCategoryViewModel(todoFirestoreRepository = get()) }
 }

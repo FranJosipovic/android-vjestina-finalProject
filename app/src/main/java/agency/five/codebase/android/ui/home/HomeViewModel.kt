@@ -1,6 +1,6 @@
 package agency.five.codebase.android.ui.home
 
-import agency.five.codebase.android.data.todo.TodoRepository
+import agency.five.codebase.android.data.todo.TodoFirestoreRepository
 import agency.five.codebase.android.model.DateCategory
 import agency.five.codebase.android.model.Todo
 import agency.five.codebase.android.ui.home.mapper.HomeScreenMapper
@@ -12,20 +12,20 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val todoRepository: TodoRepository,
+    private val todoFirestoreRepository: TodoFirestoreRepository,
     private val homeMapper: HomeScreenMapper
 ) : ViewModel() {
 
     private val userId: String
-        get() = todoRepository.getUserId()
+        get() = todoFirestoreRepository.getUserId()
 
     private val dateCategorySelected: MutableStateFlow<DateCategory> =
         MutableStateFlow(DateCategory.UPCOMING)
 
     val data: StateFlow<HomeScreenViewState> =
         dateCategorySelected.flatMapLatest { selectedCategory ->
-            todoRepository.categories.flatMapLatest { categories ->
-                todoRepository.todosByDateCategory(selectedCategory).map { todos ->
+            todoFirestoreRepository.categories.flatMapLatest { categories ->
+                todoFirestoreRepository.todosByDateCategory(selectedCategory).map { todos ->
                     homeMapper.toHomeScreenViewState(
                         dateCategories = DateCategory.values().toList(),
                         selectedDateCategory = selectedCategory,
@@ -43,7 +43,7 @@ class HomeViewModel(
 
     @RequiresApi(Build.VERSION_CODES.O)
     val nextUpcomingTodo: StateFlow<Todo?> =
-        todoRepository.nextUpcomingTodo()
+        todoFirestoreRepository.nextUpcomingTodo()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -59,13 +59,13 @@ class HomeViewModel(
     @RequiresApi(Build.VERSION_CODES.O)
     fun toggleTodoCompletion(todo: Todo) {
         viewModelScope.launch {
-            todoRepository.toggleTodoCompletion(todo, userId)
+            todoFirestoreRepository.toggleTodoCompletion(todo, userId)
         }
     }
 
     fun deleteTodo(todo: Todo) {
         viewModelScope.launch {
-            todoRepository.deleteTodo(todo, userId)
+            todoFirestoreRepository.deleteTodo(todo, userId)
         }
     }
 }

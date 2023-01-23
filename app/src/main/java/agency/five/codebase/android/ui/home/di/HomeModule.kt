@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val homeModule = module {
     viewModel {
         HomeViewModel(
-            todoRepository = get(),
+            todoFirestoreRepository = get(),
             homeMapper = get(),
         )
     }

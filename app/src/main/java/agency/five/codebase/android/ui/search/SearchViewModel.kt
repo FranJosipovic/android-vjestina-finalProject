@@ -1,6 +1,6 @@
 package agency.five.codebase.android.ui.search
 
-import agency.five.codebase.android.data.todo.TodoRepository
+import agency.five.codebase.android.data.todo.TodoFirestoreRepository
 import agency.five.codebase.android.model.Todo
 import agency.five.codebase.android.ui.search.mapper.SearchScreenMapper
 import androidx.lifecycle.ViewModel
@@ -9,19 +9,19 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
-    private val todoRepository: TodoRepository,
+    private val todoFirestoreRepository: TodoFirestoreRepository,
     private val mapper: SearchScreenMapper
 ) : ViewModel() {
 
     private val userId: String
-        get() = todoRepository.getUserId()
+        get() = todoFirestoreRepository.getUserId()
 
     private var regex = MutableStateFlow(Regex(null.toString()))
 
     val todos: StateFlow<SearchScreenViewState> =
         regex.flatMapLatest {
-            todoRepository.categories.flatMapLatest { categories ->
-                todoRepository.getTodosByRegex(it).map { todos ->
+            todoFirestoreRepository.categories.flatMapLatest { categories ->
+                todoFirestoreRepository.getTodosByRegex(it).map { todos ->
                     mapper.toSearchScreenViewState(
                         todos,
                         categories
@@ -42,13 +42,13 @@ class SearchViewModel(
 
     fun toggleTodoCompletion(todo: Todo) {
         viewModelScope.launch {
-            todoRepository.toggleTodoCompletion(todo, userId)
+            todoFirestoreRepository.toggleTodoCompletion(todo, userId)
         }
     }
 
     fun deleteTodo(todo: Todo) {
         viewModelScope.launch {
-            todoRepository.deleteTodo(todo,userId)
+            todoFirestoreRepository.deleteTodo(todo,userId)
         }
     }
 }

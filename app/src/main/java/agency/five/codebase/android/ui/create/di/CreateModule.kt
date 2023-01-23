@@ -7,7 +7,7 @@ import org.koin.dsl.module
 val createModule = module {
     viewModel {
         CreateViewModel(
-            todoRepository = get(),
+            todoFirestoreRepository = get(),
         )
     }
 }

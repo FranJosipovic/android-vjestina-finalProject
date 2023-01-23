@@ -2,9 +2,7 @@ package agency.five.codebase.android.utilities
 
 import agency.five.codebase.android.model.Todo
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
-import kotlinx.coroutines.flow.*
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -41,7 +39,7 @@ object Utilities {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getDistanceToTodo(todo: Todo): Long {
-        return Duration.between(LocalDateTime.now(), todo.dueDate).toMillis()
+        return Duration.between(LocalDateTime.now(), todo.due_date).toMillis()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -50,7 +48,7 @@ object Utilities {
         var minDistance = 100000000000
         var minTodo: Todo? = null
         todos.forEach { todo ->
-            if (getDistanceToTodo(todo) in 1 until minDistance && !todo.isCompleted) {
+            if (getDistanceToTodo(todo) in 1 until minDistance && !todo.is_completed) {
                 minDistance = getDistanceToTodo(todo)
                 minTodo = todo
             }

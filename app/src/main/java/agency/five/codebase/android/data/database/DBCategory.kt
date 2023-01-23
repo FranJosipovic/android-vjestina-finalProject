@@ -1,12 +1,9 @@
 package agency.five.codebase.android.data.database
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+class DBCategory {
+    var id: String = ""
+    var title: String = ""
+    var user_id: String = ""
 
-@Entity(tableName = "categories")
-data class DBCategory(
-    @PrimaryKey val id: Int,
-    @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "user_id") val userId: String
-)
+    constructor()
+}

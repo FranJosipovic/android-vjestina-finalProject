@@ -22,14 +22,14 @@ class SearchScreenMapperImpl : SearchScreenMapper {
         todos.map { todo ->
             TodoCardViewState(
                 todo = todo, categoryTitle = getCategoryTitle(
-                    categoryId = todo.categoryId,
+                    categoryId = todo.category_id,
                     categories = categories
                 )
             )
         }
 
 
-    private fun getCategoryTitle(categoryId: Int, categories: List<Category>): String {
+    private fun getCategoryTitle(categoryId: String, categories: List<Category>): String {
         val category: Category? = categories.find { category -> category.id == categoryId }
         return category?.title ?: "unknown"
     }

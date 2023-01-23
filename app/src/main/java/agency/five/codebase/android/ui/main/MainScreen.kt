@@ -183,7 +183,7 @@ fun MainScreen(hasUser: Boolean) {
                 composable(route = NavigationItem.HomeCategoryDestination.route) {
                     HomeCategoryScreenRoute(
                         viewModel = getViewModel(),
-                        onNavigateToTodosByCategoryScreen = { id: Int ->
+                        onNavigateToTodosByCategoryScreen = { id: String ->
                             navController.navigate(
                                 TodoByCategoryDestination.createNavigationRoute(id)
                             )
@@ -197,9 +197,9 @@ fun MainScreen(hasUser: Boolean) {
                 }
                 composable(
                     route = TodoByCategoryDestination.route,
-                    arguments = listOf(navArgument(CATEGORY_ID_KEY) { type = NavType.IntType }),
+                    arguments = listOf(navArgument(CATEGORY_ID_KEY) { type = NavType.StringType }),
                 ) {
-                    val categoryId = it.arguments?.getInt(CATEGORY_ID_KEY)!!
+                    val categoryId = it.arguments?.getString(CATEGORY_ID_KEY)!!
                     TodosByCategoryRoute(
                         viewModel = getViewModel(parameters = { parametersOf(categoryId) }),
                         onNavigateBack = navController::popBackStack

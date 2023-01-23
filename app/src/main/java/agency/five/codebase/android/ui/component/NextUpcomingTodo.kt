@@ -30,7 +30,7 @@ fun NextUpcomingTodo(todo: Todo?) {
         ) {
             if (todo != null) {
                 Text(
-                    text = Utilities.getUpcomingText(todo.dueDate),
+                    text = Utilities.getUpcomingText(todo.due_date),
                     color = MaterialTheme.colors.onSecondary,
                     fontWeight = FontWeight.Bold
                 )
@@ -42,7 +42,7 @@ fun NextUpcomingTodo(todo: Todo?) {
                 ) {
                     Text(text = todo.title, color = MaterialTheme.colors.onSecondary)
                     Text(
-                        text = "Due in " + Utilities.getTimeTillEvent(todo.dueDate),
+                        text = "Due in " + Utilities.getTimeTillEvent(todo.due_date),
                         color = MaterialTheme.colors.onSecondary,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.widthIn(Dp.Unspecified, 150.dp)

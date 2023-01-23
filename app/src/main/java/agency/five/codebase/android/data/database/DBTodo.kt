@@ -9,8 +9,8 @@ import java.time.LocalDateTime
     tableName = "todos",
 )
 data class DBTodo(
-    @PrimaryKey val id: Int,
-    @ColumnInfo(name = "category_id") val categoryId: Int,
+    @PrimaryKey val id: String,
+    @ColumnInfo(name = "category_id") val categoryId: String,
     @ColumnInfo(name = "user_id") val userId: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "due_date") val dueDate: LocalDateTime,

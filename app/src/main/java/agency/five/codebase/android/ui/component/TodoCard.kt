@@ -49,7 +49,7 @@ fun TodoCard(
     }
 
     val formatter = DateTimeFormatter.ofPattern("dd.MMM HH:mm")
-    val dateOutput = formatter.format(todo.dueDate)
+    val dateOutput = formatter.format(todo.due_date)
 
     val date = dateOutput.take(6)
     val time = dateOutput.takeLast(5)
@@ -72,8 +72,8 @@ fun TodoCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                TodoTitle(title = todo.title, dueDate = todo.dueDate)
-                TodoCompletionIndicator(todoIsCompleted = todo.isCompleted)
+                TodoTitle(title = todo.title, dueDate = todo.due_date)
+                TodoCompletionIndicator(todoIsCompleted = todo.is_completed)
             }
             TodoCategoryTitle(categoryTitle = categoryTitle)
             Spacer(modifier = Modifier.height(20.dp))

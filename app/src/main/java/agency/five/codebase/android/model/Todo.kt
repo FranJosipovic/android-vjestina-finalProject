@@ -3,10 +3,11 @@ package agency.five.codebase.android.model
 import java.time.LocalDateTime
 
 data class Todo(
-    val id: Int,
-    val categoryId: Int,
+    val id: String,
+    val category_id: String,
+    val user_id:String,
     val title: String,
-    val dueDate: LocalDateTime,
+    val due_date: LocalDateTime,
     val note: String,
-    var isCompleted: Boolean
+    var is_completed: Boolean
 )

@@ -1,6 +1,6 @@
 package agency.five.codebase.android.ui.create
 
-import agency.five.codebase.android.data.todo.TodoRepository
+import agency.five.codebase.android.data.todo.TodoFirestoreRepository
 import agency.five.codebase.android.model.Category
 import agency.five.codebase.android.model.Todo
 import android.os.Build
@@ -10,8 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -19,15 +17,15 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 
-class CreateViewModel(private val todoRepository: TodoRepository) : ViewModel() {
+class CreateViewModel(private val todoFirestoreRepository: TodoFirestoreRepository) : ViewModel() {
 
     private val userId: String
-        get() = todoRepository.getUserId()
+        get() = todoFirestoreRepository.getUserId()
 
     var createScreenState by mutableStateOf(CreateScreenViewState())
         private set
 
-    val categories: StateFlow<List<Category>> = todoRepository.categories.stateIn(
+    val categories: StateFlow<List<Category>> = todoFirestoreRepository.categories.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = emptyList()
@@ -95,17 +93,18 @@ class CreateViewModel(private val todoRepository: TodoRepository) : ViewModel() 
 
         if (createScreenState.isSuccess) {
             viewModelScope.launch {
-                todoRepository.addTodo(
+                todoFirestoreRepository.addTodo(
                     Todo(
-                        id = UUID.randomUUID().hashCode(),
-                        categoryId = createScreenState.category!!.id,
+                        id = UUID.randomUUID().hashCode().toString(),
+                        category_id = createScreenState.category!!.id,
                         title = createScreenState.todoTitle,
-                        dueDate = LocalDateTime.of(
+                        due_date = LocalDateTime.of(
                             createScreenState.date,
                             createScreenState.time
                         ),
                         note = createScreenState.todoNote,
-                        isCompleted = false
+                        is_completed = false,
+                        user_id = userId
                     ), userId
                 )
                 createScreenState = createScreenState.copy(createFinished = true)
@@ -115,7 +114,7 @@ class CreateViewModel(private val todoRepository: TodoRepository) : ViewModel() 
 
     fun addCategory(categoryTitle: String) {
         viewModelScope.launch {
-            todoRepository.addCategory(categoryTitle, userId)
+            todoFirestoreRepository.addCategory(categoryTitle, userId)
         }
     }
 }

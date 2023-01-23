@@ -1,7 +1,6 @@
 package agency.five.codebase.android
 
 import agency.five.codebase.android.data.di.dataModule
-import agency.five.codebase.android.data.di.databaseModule
 import agency.five.codebase.android.ui.create.di.createModule
 import agency.five.codebase.android.ui.drawer.di.drawerModule
 import agency.five.codebase.android.ui.home.di.homeModule
@@ -28,7 +27,6 @@ class TodoApp : Application() {
                 todosByCategoryModule,
                 homeCategoryModule,
                 searchModule,
-                databaseModule,
                 loginModule,
                 signupModule,
                 drawerModule,

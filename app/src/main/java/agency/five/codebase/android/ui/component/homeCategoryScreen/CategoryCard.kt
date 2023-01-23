@@ -20,7 +20,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 @Composable
 fun CategoryCard(
     category: Category,
-    onNavigateToTodosByCategory: (Int) -> Unit,
+    onNavigateToTodosByCategory: (String) -> Unit,
     deleteCategory: (Category) -> Unit
 ) {
 

@@ -6,7 +6,6 @@ import agency.five.codebase.android.model.Todo
 import agency.five.codebase.android.ui.component.DateCategoryTabViewState
 import agency.five.codebase.android.ui.home.HomeScreenViewState
 import agency.five.codebase.android.ui.home.TodoCardViewState
-import android.util.Log
 
 class HomeScreenMapperImpl : HomeScreenMapper {
     override fun toHomeScreenViewState(
@@ -43,14 +42,14 @@ class HomeScreenMapperImpl : HomeScreenMapper {
             TodoCardViewState(
                 todo = todo,
                 categoryTitle = getCategoryTitle(
-                    categoryId = todo.categoryId,
+                    categoryId = todo.category_id,
                     categories = categories
                 )
             )
         }
 
 
-    private fun getCategoryTitle(categoryId: Int, categories: List<Category>): String {
+    private fun getCategoryTitle(categoryId: String, categories: List<Category>): String {
         val category = categories.find { category -> category.id == categoryId }
         return category?.title ?: "No category found"
     }

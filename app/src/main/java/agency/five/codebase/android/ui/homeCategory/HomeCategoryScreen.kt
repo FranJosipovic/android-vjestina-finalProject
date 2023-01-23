@@ -27,7 +27,7 @@ import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 @Composable
 fun HomeCategoryScreenRoute(
     viewModel: HomeCategoryViewModel,
-    onNavigateToTodosByCategoryScreen: (Int) -> Unit
+    onNavigateToTodosByCategoryScreen: (String) -> Unit
 ) {
 
     val categories: List<Category> by viewModel.categories.collectAsState()
@@ -43,7 +43,7 @@ fun HomeCategoryScreenRoute(
 @Composable
 fun HomeCategoryScreen(
     categories: List<Category>,
-    onNavigateToTodosByCategoryScreen: (Int) -> Unit,
+    onNavigateToTodosByCategoryScreen: (String) -> Unit,
     createNewCategory: (String) -> Unit,
     deleteCategory: (Category) -> Unit
 ) {

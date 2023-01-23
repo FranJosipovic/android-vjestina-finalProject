@@ -5,9 +5,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val todosByCategoryModule = module {
-    viewModel { (categoryId: Int) ->
+    viewModel { (categoryId: String) ->
         TodosByCategoryViewModel(
-            todoRepository = get(),
+            todoFirestoreRepository = get(),
             categoryId = categoryId
         )
     }
