@@ -32,7 +32,7 @@ fun RemoveCategoryDialog(
                     .wrapContentHeight()
                     .padding(15.dp)
             ) {
-                Text(text = "Are you sure you want to delete $categoryTitle category?\n\nAll todos with that category will be deleted!")
+                Text(text = "Are you sure you want to delete $categoryTitle category?")
             }
         }
     }

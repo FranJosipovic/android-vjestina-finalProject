@@ -1,4 +1,4 @@
-package agency.five.codebase.android.data.user
+package agency.five.codebase.android.data.repository.user
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseUser

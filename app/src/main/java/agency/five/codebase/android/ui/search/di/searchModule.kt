@@ -9,7 +9,8 @@ import org.koin.dsl.module
 val searchModule = module {
     viewModel {
         SearchViewModel(
-            todoFirestoreRepository = get(),
+            todoRepository = get(),
+            categoryRepository = get(),
             mapper = get()
         )
     }

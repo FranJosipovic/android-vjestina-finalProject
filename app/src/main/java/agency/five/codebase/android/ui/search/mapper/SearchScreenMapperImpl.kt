@@ -31,6 +31,6 @@ class SearchScreenMapperImpl : SearchScreenMapper {
 
     private fun getCategoryTitle(categoryId: String, categories: List<Category>): String {
         val category: Category? = categories.find { category -> category.id == categoryId }
-        return category?.title ?: "unknown"
+        return category?.title ?: "No category found"
     }
 }

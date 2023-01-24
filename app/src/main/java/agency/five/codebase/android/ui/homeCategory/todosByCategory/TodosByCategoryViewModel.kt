@@ -1,6 +1,8 @@
 package agency.five.codebase.android.ui.homeCategory.todosByCategory
 
-import agency.five.codebase.android.data.todo.TodoFirestoreRepository
+import agency.five.codebase.android.data.repository.category.CategoryRepository
+import agency.five.codebase.android.data.repository.todo.TodoRepository
+import agency.five.codebase.android.data.repository.user.UserRepository
 import agency.five.codebase.android.model.Category
 import agency.five.codebase.android.model.Todo
 import androidx.lifecycle.ViewModel
@@ -11,16 +13,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TodosByCategoryViewModel(
-    private val todoFirestoreRepository: TodoFirestoreRepository,
+    private val todoRepository: TodoRepository,
+    private val categoryRepository: CategoryRepository,
     categoryId: String
 ) : ViewModel() {
 
-    private val userId: String
-        get() = todoFirestoreRepository.getUserId()
-
     val todosByCategory: StateFlow<List<Todo>> =
-        todoFirestoreRepository
-            .todosByCategory(categoryId,userId)
+        todoRepository
+            .todosByCategory(categoryId)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -28,23 +28,23 @@ class TodosByCategoryViewModel(
             )
 
     val category: StateFlow<Category> =
-        todoFirestoreRepository
-            .categoryById(categoryId = categoryId,userId)
+        categoryRepository
+            .categoryById(categoryId = categoryId)
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = Category(title = "", id = "", user_id = userId)
+                initialValue = Category(title = "", id = "", user_id = "")
             )
 
     fun toggleTodoCompletion(todo: Todo) {
         viewModelScope.launch {
-            todoFirestoreRepository.toggleTodoCompletion(todo,userId)
+            todoRepository.toggleTodoCompletion(todo)
         }
     }
 
     fun deleteTodo(todo: Todo) {
         viewModelScope.launch {
-            todoFirestoreRepository.deleteTodo(todo,userId)
+            todoRepository.deleteTodo(todo)
         }
     }
 }

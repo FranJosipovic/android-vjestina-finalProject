@@ -7,7 +7,8 @@ import org.koin.dsl.module
 val todosByCategoryModule = module {
     viewModel { (categoryId: String) ->
         TodosByCategoryViewModel(
-            todoFirestoreRepository = get(),
+            todoRepository = get(),
+            categoryRepository = get(),
             categoryId = categoryId
         )
     }

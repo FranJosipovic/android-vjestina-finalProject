@@ -1,6 +1,8 @@
 package agency.five.codebase.android.ui.home
 
-import agency.five.codebase.android.data.todo.TodoFirestoreRepository
+import agency.five.codebase.android.data.repository.category.CategoryRepository
+import agency.five.codebase.android.data.repository.todo.TodoRepository
+import agency.five.codebase.android.data.repository.user.UserRepository
 import agency.five.codebase.android.model.DateCategory
 import agency.five.codebase.android.model.Todo
 import agency.five.codebase.android.ui.home.mapper.HomeScreenMapper
@@ -12,20 +14,18 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val todoFirestoreRepository: TodoFirestoreRepository,
+    private val todoRepository: TodoRepository,
+    private val categoryRepository: CategoryRepository,
     private val homeMapper: HomeScreenMapper
 ) : ViewModel() {
-
-    private val userId: String
-        get() = todoFirestoreRepository.getUserId()
 
     private val dateCategorySelected: MutableStateFlow<DateCategory> =
         MutableStateFlow(DateCategory.UPCOMING)
 
     val data: StateFlow<HomeScreenViewState> =
         dateCategorySelected.flatMapLatest { selectedCategory ->
-            todoFirestoreRepository.categories.flatMapLatest { categories ->
-                todoFirestoreRepository.todosByDateCategory(selectedCategory).map { todos ->
+            categoryRepository.categories.flatMapLatest { categories ->
+                todoRepository.todosByDateCategory(selectedCategory).map { todos ->
                     homeMapper.toHomeScreenViewState(
                         dateCategories = DateCategory.values().toList(),
                         selectedDateCategory = selectedCategory,
@@ -43,7 +43,7 @@ class HomeViewModel(
 
     @RequiresApi(Build.VERSION_CODES.O)
     val nextUpcomingTodo: StateFlow<Todo?> =
-        todoFirestoreRepository.nextUpcomingTodo()
+        todoRepository.nextUpcomingTodo()
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -59,13 +59,13 @@ class HomeViewModel(
     @RequiresApi(Build.VERSION_CODES.O)
     fun toggleTodoCompletion(todo: Todo) {
         viewModelScope.launch {
-            todoFirestoreRepository.toggleTodoCompletion(todo, userId)
+            todoRepository.toggleTodoCompletion(todo)
         }
     }
 
     fun deleteTodo(todo: Todo) {
         viewModelScope.launch {
-            todoFirestoreRepository.deleteTodo(todo, userId)
+            todoRepository.deleteTodo(todo)
         }
     }
 }

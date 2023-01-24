@@ -1,32 +1,51 @@
 package agency.five.codebase.android.data.di
 
-import agency.five.codebase.android.data.database.CategoryFirestoreDao
-import agency.five.codebase.android.data.database.TodoFirestoreDao
-import agency.five.codebase.android.data.todo.TodoFirestoreRepository
-import agency.five.codebase.android.data.todo.TodoFirestoreRepositoryImpl
-import agency.five.codebase.android.data.user.UserRepository
-import agency.five.codebase.android.data.user.UserRepositoryImpl
+import agency.five.codebase.android.data.repository.category.CategoryRepository
+import agency.five.codebase.android.data.repository.category.CategoryRepositoryImpl
+import agency.five.codebase.android.data.database.category.CategoryDao
+import agency.five.codebase.android.data.database.category.CategoryDaoImpl
+import agency.five.codebase.android.data.database.todo.TodoDao
+import agency.five.codebase.android.data.database.todo.TodoDaoImpl
+import agency.five.codebase.android.data.mapper.SnapshotMapper
+import agency.five.codebase.android.data.mapper.SnapshotMapperImpl
+import agency.five.codebase.android.data.repository.todo.TodoRepository
+import agency.five.codebase.android.data.repository.todo.TodoRepositoryImpl
+import agency.five.codebase.android.data.repository.user.UserRepository
+import agency.five.codebase.android.data.repository.user.UserRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 val dataModule = module {
-    single<TodoFirestoreRepository> {
-        TodoFirestoreRepositoryImpl(
+
+    single<TodoRepository> {
+        TodoRepositoryImpl(
             userRepository = get(),
-            todoFirestoreDao = get(),
-            categoryFirestoreDao = get(),
+            todoDao = get(),
             bgDispatcher = Dispatchers.IO
         )
     }
+
+    single<CategoryRepository> {
+        CategoryRepositoryImpl(
+            userRepository = get(),
+            categoryDao = get(),
+            bgDispatcher = Dispatchers.IO
+        )
+    }
+
     single<UserRepository> {
         UserRepositoryImpl(
             dispatcher = Dispatchers.IO,
         )
     }
-    single<TodoFirestoreDao> {
-        TodoFirestoreDao()
+
+    single<TodoDao> {
+        TodoDaoImpl(snapshotMapper = get())
     }
-    single<CategoryFirestoreDao> {
-        CategoryFirestoreDao()
+
+    single<CategoryDao> {
+        CategoryDaoImpl()
     }
+
+    single<SnapshotMapper> { SnapshotMapperImpl() }
 }

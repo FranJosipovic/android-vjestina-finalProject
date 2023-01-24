@@ -1,6 +1,6 @@
 package agency.five.codebase.android.ui.login
 
-import agency.five.codebase.android.data.user.UserRepository
+import agency.five.codebase.android.data.repository.user.UserRepository
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.getValue

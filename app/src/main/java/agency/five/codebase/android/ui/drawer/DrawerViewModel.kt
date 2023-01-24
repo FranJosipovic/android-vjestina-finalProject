@@ -1,6 +1,6 @@
 package agency.five.codebase.android.ui.drawer
 
-import agency.five.codebase.android.data.user.UserRepository
+import agency.five.codebase.android.data.repository.user.UserRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser

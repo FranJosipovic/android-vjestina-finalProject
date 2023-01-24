@@ -4,6 +4,7 @@ import agency.five.codebase.android.model.Category
 import agency.five.codebase.android.ui.component.dialog.AddCategoryDialog
 import agency.five.codebase.android.ui.component.homeCategoryScreen.CategoryCard
 import agency.five.codebase.android.ui.theme.Shapes
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,6 +32,10 @@ fun HomeCategoryScreenRoute(
 ) {
 
     val categories: List<Category> by viewModel.categories.collectAsState()
+
+    for(category in categories){
+        Log.i("smt",category.toString())
+    }
 
     HomeCategoryScreen(
         categories = categories,

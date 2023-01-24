@@ -1,7 +1,7 @@
-package agency.five.codebase.android.data.database
+package agency.five.codebase.android.data.database.category
 
 class DBCategory {
-    var id: String = ""
+    var documentId: String = ""
     var title: String = ""
     var user_id: String = ""
 
