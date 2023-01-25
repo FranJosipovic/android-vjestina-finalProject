@@ -4,5 +4,5 @@ import agency.five.codebase.android.model.Todo
 import com.google.firebase.firestore.QuerySnapshot
 
 interface SnapshotMapper {
-    fun mapToTodo(snapshot: QuerySnapshot):List<Todo>
+    fun mapToTodo(snapshot: QuerySnapshot): List<Todo>
 }

@@ -12,8 +12,7 @@ interface TodoRepository {
     fun todosByCategory(categoryId: String): Flow<List<Todo>>
     fun nextUpcomingTodo(): Flow<Todo?>
     fun getTodosByRegex(pattern: Regex): Flow<List<Todo>>
-    suspend fun addTodo(categoryId: String, title:String, dueDate: LocalDateTime, note:String)
+    suspend fun addTodo(categoryId: String, title: String, dueDate: LocalDateTime, note: String)
     suspend fun deleteTodo(todo: Todo)
     suspend fun toggleTodoCompletion(todo: Todo)
 }
-

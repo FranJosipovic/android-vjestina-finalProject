@@ -11,4 +11,3 @@ class DBTodo {
     var note: String = ""
     var isCompleted: Boolean = false
 }
-

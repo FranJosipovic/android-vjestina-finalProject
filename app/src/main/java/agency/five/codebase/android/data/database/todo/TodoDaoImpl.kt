@@ -18,10 +18,12 @@ const val TODOS_COLLECTION = "todos"
 class TodoDaoImpl(private val snapshotMapper: SnapshotMapper) : TodoDao {
     private val db = Firebase.firestore
 
+    private val todoRef = db.collection(TODOS_COLLECTION)
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getTodos(userId: String): Flow<List<Todo>> {
         return callbackFlow {
-            val registration = db.collection(TODOS_COLLECTION).whereEqualTo("user_id", userId)
+            val registration = todoRef.whereEqualTo("user_id", userId)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
                         cancel()
@@ -38,7 +40,7 @@ class TodoDaoImpl(private val snapshotMapper: SnapshotMapper) : TodoDao {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getTodosByCategory(userId: String, categoryId: String): Flow<List<Todo>> {
         return callbackFlow {
-            val registration = db.collection(TODOS_COLLECTION).whereEqualTo("user_id", userId)
+            val registration = todoRef.whereEqualTo("user_id", userId)
                 .whereEqualTo("category_id", categoryId).addSnapshotListener { snapshot, e ->
                     if (e != null) {
                         cancel()
@@ -53,7 +55,13 @@ class TodoDaoImpl(private val snapshotMapper: SnapshotMapper) : TodoDao {
         }
     }
 
-    override fun insertTodo(categoryId: String, title:String, dueDate: LocalDateTime, note:String,userId:String) {
+    override fun insertTodo(
+        categoryId: String,
+        title: String,
+        dueDate: LocalDateTime,
+        note: String,
+        userId: String
+    ) {
         val data = hashMapOf(
             "category_id" to categoryId,
             "user_id" to userId,
@@ -62,15 +70,15 @@ class TodoDaoImpl(private val snapshotMapper: SnapshotMapper) : TodoDao {
             "note" to note,
             "is_completed" to false
         )
-        db.collection(TODOS_COLLECTION).add(data)
+        todoRef.add(data)
     }
 
     override fun removeTodo(todoId: String) {
         Log.i("deleteTodo", todoId)
-        db.collection(TODOS_COLLECTION).document(todoId).delete()
+        todoRef.document(todoId).delete()
     }
 
     override fun toggleTodoCompletion(todo: Todo) {
-        db.collection(TODOS_COLLECTION).document(todo.id).update("is_completed", !todo.is_completed)
+        todoRef.document(todo.id).update("is_completed", !todo.is_completed)
     }
 }

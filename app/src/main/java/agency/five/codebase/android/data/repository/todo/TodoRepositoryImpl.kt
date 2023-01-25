@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 
-
 class TodoRepositoryImpl(
     private val userRepository: UserRepository,
     private val todoDao: TodoDao,
@@ -56,9 +55,14 @@ class TodoRepositoryImpl(
             .flowOn(bgDispatcher)
     }
 
-    override suspend fun addTodo(categoryId: String,title:String,dueDate:LocalDateTime,note:String) {
+    override suspend fun addTodo(
+        categoryId: String,
+        title: String,
+        dueDate: LocalDateTime,
+        note: String
+    ) {
         withContext(bgDispatcher) {
-            todoDao.insertTodo(categoryId,title,dueDate,note,getUserId())
+            todoDao.insertTodo(categoryId, title, dueDate, note, getUserId())
         }
     }
 
@@ -69,16 +73,11 @@ class TodoRepositoryImpl(
     }
 
 
-
-
-
     override suspend fun toggleTodoCompletion(todo: Todo) {
         withContext(bgDispatcher) {
             todoDao.toggleTodoCompletion(todo)
         }
     }
-
-
 
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -33,6 +33,6 @@ class TodoApp : Application() {
                 mainScreenModule
             )
         }
-        Log.d("App","app started")
+        Log.d("App", "app started")
     }
 }

@@ -16,7 +16,8 @@ import agency.five.codebase.android.ui.search.SearchScreenRoute
 import agency.five.codebase.android.ui.signup.SignupScreenRoute
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add

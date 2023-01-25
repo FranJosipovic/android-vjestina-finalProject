@@ -53,10 +53,10 @@ class CategoryDaoImpl : CategoryDao {
             "title" to title,
             "user_id" to userId
         )
-        db.collection(CATEGORIES_COLLECTION).add(data)
+        categoriesRef.add(data)
     }
 
     override fun removeCategory(categoryId: String) {
-        db.collection(CATEGORIES_COLLECTION).document(categoryId).delete()
+        categoriesRef.document(categoryId).delete()
     }
 }

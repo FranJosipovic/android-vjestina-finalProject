@@ -2,7 +2,6 @@ package agency.five.codebase.android.ui.homeCategory.todosByCategory
 
 import agency.five.codebase.android.data.repository.category.CategoryRepository
 import agency.five.codebase.android.data.repository.todo.TodoRepository
-import agency.five.codebase.android.data.repository.user.UserRepository
 import agency.five.codebase.android.model.Category
 import agency.five.codebase.android.model.Todo
 import androidx.lifecycle.ViewModel

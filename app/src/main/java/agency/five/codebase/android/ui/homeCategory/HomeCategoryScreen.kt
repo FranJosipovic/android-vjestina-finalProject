@@ -33,8 +33,8 @@ fun HomeCategoryScreenRoute(
 
     val categories: List<Category> by viewModel.categories.collectAsState()
 
-    for(category in categories){
-        Log.i("smt",category.toString())
+    for (category in categories) {
+        Log.i("smt", category.toString())
     }
 
     HomeCategoryScreen(
